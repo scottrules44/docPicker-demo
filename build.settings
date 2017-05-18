@@ -35,6 +35,7 @@ settings =
 				"Icon-Small-50@2x.png",
 			},
 		},
+		iCloud = true,
 	},
 	plugins =
     {
