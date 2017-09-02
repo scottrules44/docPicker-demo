@@ -23,8 +23,15 @@ local exportButton = widget.newButton( {
     onRelease = function (e)
     docPicker.import({"public.image"}, function(ev)
         if (ev.status == "document picked") then
-                     local testImage = display.newImage( "test.png", system.TemporaryDirectory, display.contentCenterX, display.contentCenterY+80 )
-            native.showAlert( "File Imported", contents,{"Ok"} )
+            local platformVersion = system.getInfo( "platformVersion" ) or 0
+            local iOSVersion = tonumber(string.sub( platformVersion, 1, 4 )) 
+            if( iOSVersion >= 11 and system.getInfo("platform") == "ios" ) then 
+                local json = require('json')
+                native.showAlert( "File Imported", json.encode( ev.urls ),{"Ok"} )
+            else
+                native.showAlert( "File Imported", ev.url,{"Ok"} )
+            end
+            
         end
     end)
     end,
