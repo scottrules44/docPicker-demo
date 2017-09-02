@@ -21,7 +21,7 @@ local exportButton = widget.newButton( {
 
 local exportButton = widget.newButton( {
     onRelease = function (e)
-    docPicker.import({"public.image"}, system.pathForFile( "test.png", system.TemporaryDirectory ), function(ev)
+    docPicker.import({"public.image"}, function(ev)
         if (ev.status == "document picked") then
                      local testImage = display.newImage( "test.png", system.TemporaryDirectory, display.contentCenterX, display.contentCenterY+80 )
             native.showAlert( "File Imported", contents,{"Ok"} )
