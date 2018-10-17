@@ -1,6 +1,7 @@
 local docPicker = require("plugin.docPicker")
 docPicker.init()
 local widget = require("widget")
+local json = require("json")
 local bg = display.newRect( display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight )
 bg:setFillColor(.5)
 local title = display.newText( "Doc Picker Plugin", display.contentCenterX, 20 , native.systemFontBold, 20 )
@@ -19,20 +20,11 @@ local exportButton = widget.newButton( {
     y = display.contentCenterY-30,
 })
 
-local exportButton = widget.newButton( {
+local importButton = widget.newButton( {
     onRelease = function (e)
-    docPicker.import({"public.image"}, function(ev)
-        if (ev.status == "document picked") then
-            local platformVersion = system.getInfo( "platformVersion" ) or 0
-            local iOSVersion = tonumber(string.sub( platformVersion, 1, 4 )) 
-            if( iOSVersion >= 11 and system.getInfo("platform") == "ios" ) then 
-                local json = require('json')
-                native.showAlert( "File Imported", json.encode( ev.urls ),{"Ok"} )
-            else
-                native.showAlert( "File Imported", ev.url,{"Ok"} )
-            end
-            
-        end
+    docPicker.import({"public.data"}, function(ev)
+            native.showAlert( "File Imported", json.encode(ev),{"Ok"} )
+        
     end)
     end,
     label = "Import Doc",
